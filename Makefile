@@ -7,7 +7,7 @@ SRC = src
 CPP_SOURCE = $(wildcard *.cpp) $(wildcard $(SRC)/*.cpp) $(wildcard $(SRC)/*/*.cpp)
 CPP_HEADERS = $(wildcard *.hpp) $(wildcard $(SRC)/*.hpp) $(wildcard $(SRC)/*/*.hpp)
 
-LIB = C:\SDL2
+#LIB = C:\SDL2
 
 CFLAGS = -std=c++17 -O2 -I"$(LIBRERIAS_PATH)\include\SDL2"
 
