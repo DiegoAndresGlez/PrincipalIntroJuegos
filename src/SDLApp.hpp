@@ -1,5 +1,6 @@
 #pragma once
 #include<SDL.h>
+#include "motor/Pipeline.hpp"
 #include<vector>
 #include<string>
 class SDLApp{
@@ -25,6 +26,10 @@ class SDLApp{
         SDL_Window* vnt;
         SDL_Surface* vntsurf;
         SDL_Renderer* render;
+
+        //02_lineas_figuras
+        Pipeline *ensamble;
+        std::vector<Coordenadas> testpixeles;
 
     public:
         SDL_Color bg_color;

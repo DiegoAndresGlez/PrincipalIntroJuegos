@@ -4,10 +4,12 @@
 #include "utilidad/Tiempo.hpp"
 #include "motor/KeyOyente.hpp"
 #include "motor/MouseOyente.hpp"
+
 SDLApp::SDLApp(){
     this->vnt = nullptr;
     this->vntsurf = nullptr;
     this->render = nullptr;
+    this->ensamble = nullptr;
 
     bg_color.r = 255; //rojo
     bg_color.g = 255; //verde
@@ -94,24 +96,34 @@ bool SDLApp::on_init(){
     }
     //la forma de procesar en GPU
     SDL_SetHint(SDL_HINT_RENDER_BATCHING, "opengl");
+    
     //creamos el 'canvas'
     get().render = SDL_CreateRenderer(
         get().vnt, //la ventana
         -1, //driver
         SDL_RENDERER_ACCELERATED);
+    
     //revisamos si se creo correctamente
     if(get().render == NULL){
         printf("No se creo el renderer por: %s", SDL_GetError());
         return false;
     }
+
+    //si se creo correcto lo agregamos al Pipeline
+    get().ensamble = new Pipeline(*get().render);
+
+    //creamos algunos pixeles
+    for(int i = 0; i < 300; ++i)
+        testpixeles.push_back({100,100+i});
+    
     //agregamos el color del background del frame
     SDL_SetRenderDrawColor(
         get().render,       //canvas
         get().bg_color.r,   //rojo
         get().bg_color.g,   //verde
         get().bg_color.b,   //azul
-        SDL_ALPHA_TRANSPARENT); //como usar el alpha
-
+        SDL_ALPHA_TRANSPARENT); 
+    
     return true;
 }
 
@@ -159,7 +171,10 @@ void SDLApp::on_frameupdate(double dt){
         SDL_Color{0,135,62},
         "onuava");
 
-    //Mostrar frame
+    //probar plotter
+    ensamble->puntos(testpixeles, SDL_Color{255,100,255,255});
+    //render_pixel
+    //Mostrar frame (actualizar)
     SDL_RenderPresent(get().render);
 
     //resetear color del frame
